@@ -3,28 +3,41 @@ import { RepositoryItem } from "./RepositoryItem";
 import '../styles/repositories.scss';
 
 interface Repository {
-    name: string;
-    description: string;
-    html_url: string;
+    avatar_url: string;
+    id: string;
+    login: string;
 }
 
 export function RepositoryList() {
     const [repositories, setRepositories] = useState<Repository[]>([]);
 
     useEffect(() => {
-        fetch('https://api.github.com/orgs/rocketseat/repos')
+        fetch('https://api.github.com/users/lvneto/followers')
         .then(response => response.json())
         .then(data => setRepositories(data))
-    }, []);   
+    }, []);
 
     return (
-        <section className="repository-list">
+        <section>
             <h1>Lista de repositórios</h1>
-            <ul>
-                {repositories.map(repository => {
-                    return <RepositoryItem key={repository.name} repository={repository}/>
-                })}                             
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>avatar_url</th>
+                        <th>id</th>
+                        <th>login</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {repositories.map(repository => (
+                        <tr key= {repository.id} >
+                            <td><img width="100px" src={repository.avatar_url}/></td>
+                            <td>{repository.id}</td>
+                            <td>{repository.login}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>          
         </section>
     );
 }

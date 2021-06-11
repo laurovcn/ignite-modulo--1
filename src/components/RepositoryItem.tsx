@@ -1,20 +1,35 @@
 interface RepositoryItemProps {
     repository: {
-        name:string;
-        description:string;
-        html_url:string;
+        id:number;
+        login:string;
+        avatar_url:string;
     }
 }
 
 export function RepositoryItem(props: RepositoryItemProps) {
     return (
-        <li>
-        <strong> {props.repository.name} </strong>
-        <p> {props.repository.description} </p>
-        
-        <a href= {props.repository.html_url} >
-            Acessar repositório
-        </a>
-    </li>
+        <>
+        <h1>Followers</h1>       
+       
+         <table>
+            <thead>
+                <th>ID</th>
+                <th>login</th>
+                <th>Avatar</th>
+            </thead>
+            <tbody>
+            {RepositoryItem.map((repository) => {
+            return (
+              <tr key={repository.id}>
+                <td>{repository.login}</td>              
+                
+                <td>{repository.avatar_url}</td>                
+              </tr>
+            );
+          })}
+            </tbody>
+         </table>       
+
+    </>               
     );
 }
